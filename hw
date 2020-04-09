@@ -8,7 +8,6 @@ findMax([H,N|R], MaxVal) :-
     max(H, MaxR, MaxVal).
               
 % Question 2. Check if the intersection of two given list exists.
-% Redo.
 %notMember(H, [H|_]) :-
  %   !,
   %  fail.
@@ -29,9 +28,9 @@ intersection([L1H|L1T], L2) :-
     intersection(L1T, L2).
 
 % Question 3. Union of two given lists.
-%isMember(X, [X|_]).
-%isMember(X, [_|T]) :-
- %   isMember(X, T).
+isMember(X, [X|_]).
+isMember(X, [_|T]) :-
+    isMember(X, T).
 union([], L, L).
 union([L1H|L1T], L2, L3) :-
     isMember(L1H, L2),
