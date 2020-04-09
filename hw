@@ -1,0 +1,64 @@
+% Question 1. Find the maximum of a list of numbers.
+max(X, Y, X) :- X >= Y, !.
+max(X, Y, Y) :- X < Y.
+
+findMax([X], X).
+findMax([H,N|R], MaxVal) :-
+    findMax([N|R], MaxR),
+    max(H, MaxR, MaxVal).
+              
+% Question 2. Check if the intersection of two given list exists.
+% Redo.
+%notMember(H, [H|_]) :-
+ %   !,
+  %  fail.
+%notMember(H,[_|T]) :-
+ %   !,
+  %  notMember(H,T).
+%notMember(_,[]).
+
+isMember(X, [X|_]).
+isMember(X, [_|T]) :-
+    isMember(X, T).
+
+intersection(_, []).
+intersection([], _).
+intersection([L1H|L1T], L2) :-
+    \+isMember(L1H, L2), 
+    !,
+    intersection(L1T, L2).
+
+% Question 3. Union of two given lists.
+%isMember(X, [X|_]).
+%isMember(X, [_|T]) :-
+ %   isMember(X, T).
+union([], L, L).
+union([L1H|L1T], L2, L3) :-
+    isMember(L1H, L2),
+    !,
+    union(L1T, L2, L3). 
+union([H|L1T], L2, [H|L3T]) :-
+    union(L1T, L2, L3T). 
+
+% Question 4. Return the final element of a list.
+lastElem([X],X).
+lastElem([_|T], X) :-
+    lastElem(T, X),
+    !.
+
+% Question 5. Return a list of tuples from mapping the elements of two lists.
+append([], X, X).
+append([X|L1], L2, [X|L3]):-
+    append(L1, L2, L3).
+
+helper(_, [], []).
+helper(X, [L2H|L2T], L3) :-
+    L3 = [(X,L2H)|L3T],
+    helper(X, L2T, L3T).
+
+mapList([], _, []).
+mapList([L1H|L1T], L2, L3) :-
+    helper(L1H, L2, L3H),
+    append(L3H, L3T, L3),
+    mapList(L1T, L2, L3T).
+
